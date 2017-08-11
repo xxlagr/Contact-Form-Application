@@ -1,12 +1,17 @@
-import { Component, Input, ElementRef, ViewChild, Directive } from '@angular/core';
-import { Contact } from "./models/contact";
-import { FormsModule, FormBuilder, Validator, AbstractControl, NG_VALIDATORS, ValidatorFn } from '@angular/forms';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { FormsModule, FormBuilder } from '@angular/forms';
+
+import { Contact } from './models/contact';
+import { FormOptions } from './shared/form-options'
+
 
 @Component({
+
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [FormBuilder]
+  providers: [FormBuilder, FormOptions]
+
 })
 
 export class AppComponent {
@@ -15,7 +20,7 @@ export class AppComponent {
 
   @ViewChild('phone') phone: ElementRef;
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, public formOptions: FormOptions) {
 
     this.form = formBuilder.group(new Contact());
 
@@ -59,49 +64,5 @@ export class AppComponent {
     window.MyForm.submit();
 
   }
-
-}
-
-@Directive({
-  selector: '[maxNumbersSum]',
-  providers: [{provide: NG_VALIDATORS, useExisting: MaxNumbersSumValidatorDirective, multi: true}]
-})
-
-export class MaxNumbersSumValidatorDirective implements Validator {
-
-  @Input() maxNumbersSum: number;
- 
-  validate(control: AbstractControl): {[key: string]: any} {
-
-    return this.maxNumbersSum ? maxNumbersSumValidator(this.maxNumbersSum)(control) : null;
-
-  }
-
-}
-
-export function maxNumbersSumValidator(maxSum: number): ValidatorFn {
-
-  return (control: AbstractControl): {[key: string]: any} => {
-
-    var result = control.value.match(/\d/g);
-    var sum = 0;
-
-    if (result != null) {
-
-      for(var i: number = 0;i<=10;i++) {
-        
-        if(result[i] == undefined) break;
-
-        sum += parseInt(result[i]);
-
-      }
-
-    }
-
-    const greaterThanMaxSum = sum > maxSum;
-
-    return greaterThanMaxSum ? {'maxNumbersSum': {value: control.value}} : null;
-
-  };
 
 }

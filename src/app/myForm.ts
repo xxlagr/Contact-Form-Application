@@ -1,16 +1,16 @@
 import { Valid } from "./models/valid"
 import { Contact } from "./models/contact";
+import { FormOptions } from './shared/form-options'
 
 export class MyForm {
 
-    public static PHONE_MAX_NUMBERS_SUM = 30;
-    public static PHONE_FIELD_NAME = "phone";
-
     private _formData: Contact;
+    private _formOptions: FormOptions;
 
     constructor() {
 
         this._formData = new Contact();
+        this._formOptions = new FormOptions();
 
     }
 
@@ -19,10 +19,13 @@ export class MyForm {
 
         var result = new Valid();
 
-        // Validate phone number
-        if(this.phoneNumbersSum(this._formData.phone) > MyForm.PHONE_MAX_NUMBERS_SUM) {
+        // Validate fio field
 
-            result.setFieldError(MyForm.PHONE_FIELD_NAME);
+        // Validate phone number
+        if (this._formOptions.phoneNumbersSum(this._formData.phone) > FormOptions.PHONE_MAX_NUMBERS_SUM
+            || this._formData.phone.match(new RegExp(FormOptions.PHONE_PATTERN)) == null) {
+
+            result.setFieldError(FormOptions.PHONE_FIELD_NAME);
 
         }
 
@@ -49,12 +52,6 @@ export class MyForm {
 
         this.validate();
         console.log("validation passed");
-
-    }
-
-    private phoneNumbersSum(phone: string): number {
-
-        return MyForm.PHONE_MAX_NUMBERS_SUM;
 
     }
 

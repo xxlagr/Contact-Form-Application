@@ -1,21 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextMaskModule } from 'angular2-text-mask';
 
-import { AppComponent, MaxNumbersSumValidatorDirective } from './app.component';
+import { MaxNumbersSumValidatorDirective } from './shared/max-numbers-sum-validator.directive';
+import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MaxNumbersSumValidatorDirective
+    MaxNumbersSumValidatorDirective   
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
-    TextMaskModule
+    ReactiveFormsModule
   ],
   bootstrap: [AppComponent],
 })
+
 export class AppModule { }
