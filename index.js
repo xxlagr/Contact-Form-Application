@@ -68517,13 +68517,13 @@ var FormOptions = FormOptions_1 = (function () {
     });
     // Count phone numbers sum
     FormOptions.phoneNumbersSum = function (phone) {
-        var result = phone.match(/\d/g);
+        var matches = phone.match(/\d/g);
         var sum = 0;
-        if (result != null) {
+        if (matches != null) {
             for (var i = 0; i <= 10; i++) {
-                if (result[i] == undefined)
+                if (matches[i] == undefined)
                     break;
-                sum += parseInt(result[i]);
+                sum += parseInt(matches[i]);
             }
         }
         return sum;
