@@ -14,7 +14,7 @@ const { AotPlugin } = require('@ngtools/webpack');
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
-const entryPoints = ["inline","polyfills","sw-register","vendor","main"];
+const entryPoints = ["inline","sw-register","vendor","main"];
 const minimizeCss = false;
 const baseHref = "";
 const deployUrl = "";
@@ -76,16 +76,13 @@ module.exports = {
     ]
   },
   "entry": {
-    "main": [
+    "index": [
       "./src\\main.ts"
     ],
-    "polyfills": [
-      "./src\\polyfills.ts"
-    ]
   },
   "output": {
-    "path": path.join(process.cwd(), "dist"),
-    "filename": "[name].bundle.js",
+    "path": path.join(process.cwd(), "./"),
+    "filename": "[name].js",
     "chunkFilename": "[id].chunk.js"
   },
   "module": {
@@ -392,26 +389,6 @@ module.exports = {
     new CommonsChunkPlugin({
       "minChunks": 2,
       "async": "common"
-    }),
-    new CommonsChunkPlugin({
-      "name": [
-        "inline"
-      ],
-      "minChunks": null
-    }),
-    new CommonsChunkPlugin({
-      "name": [
-        "vendor"
-      ],
-      "minChunks": (module) => {
-                return module.resource
-                    && (module.resource.startsWith(nodeModules)
-                        || module.resource.startsWith(genDirNodeModules)
-                        || module.resource.startsWith(realNodeModules));
-            },
-      "chunks": [
-        "main"
-      ]
     }),
     new SourceMapDevToolPlugin({
       "filename": "[file].map[query]",

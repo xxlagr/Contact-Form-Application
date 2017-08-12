@@ -43,16 +43,16 @@ export class FormOptions {
     // Count phone numbers sum
     public static phoneNumbersSum(phone: string): number {
 
-        var result = phone.match(/\d/g);
+        var matches = phone.match(/\d/g);
         var sum = 0;
 
-        if (result != null) {
+        if (matches != null) {
 
             for (let i: number = 0; i <= 10; i++) {
 
-                if (result[i] == undefined) break;
+                if (matches[i] == undefined) break;
 
-                sum += parseInt(result[i]);
+                sum += parseInt(matches[i]);
 
             }
 

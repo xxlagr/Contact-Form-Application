@@ -57,6 +57,7 @@ export class AppComponent {
 
     // Submit form in MyForm obj
     window.MyForm.submit();
+      
 
   }
 
