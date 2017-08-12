@@ -1,26 +1,35 @@
 <div class="contact">
   <div class="contact__form">
-    <form id="myForm" [formGroup]="form" (ngSubmit)="submitForm()">
+    <form id="{{formOptions.FORM_ID}}" [formGroup]="form" (ngSubmit)="submitForm()" action="success.json">
       <fieldset>
-        <legend>Ваши контакты: </legend>
+        <legend>Ваши контакты</legend>
         <div class="contact__form-row">
           <label>Фамилия Имя Отчество*</label>
-          <input type="text" formControlName="{{formOptions.FIO_FIELD_NAME}}" name="{{formOptions.FIO_FIELD_NAME}}" required minlength="5" pattern="{{formOptions.FIO_PATTERN}}" placeholder="Петров Иван Васильевич">
+          <input type="text" formControlName="{{formOptions.FIO_FIELD_NAME}}" name="{{formOptions.FIO_FIELD_NAME}}" required minlength="5"
+            pattern="{{formOptions.FIO_PATTERN}}" placeholder="Петров Иван Васильевич">
         </div>
         <div class="contact__form-row">
           <label>Email в Яндекс.Почте*</label>
-          <input type="email" formControlName="{{formOptions.EMAIL_FIELD_NAME}}" name="{{formOptions.EMAIL_FIELD_NAME}}" required minlength="7" pattern="{{formOptions.EMAIL_PATTERN}}" placeholder="my.mail@yandex.com">
+          <input type="email" formControlName="{{formOptions.EMAIL_FIELD_NAME}}" name="{{formOptions.EMAIL_FIELD_NAME}}" required minlength="7"
+            pattern="{{formOptions.EMAIL_PATTERN}}" placeholder="my.mail@yandex.com">
         </div>
         <div class="contact__form-row">
           <label>Телефон*</label>
-          <input type="tel" name="{{formOptions.PHONE_FIELD_NAME}}" formControlName="{{formOptions.PHONE_FIELD_NAME}}" required minlength="11" pattern="{{formOptions.PHONE_PATTERN}}" placeholder="+7(900)123-45-67" (focus)="maskPhoneInput(phone.value)" (input)="maskPhoneInput(phone.value)" maxNumbersSum #phone>
+          <input type="tel" name="{{formOptions.PHONE_FIELD_NAME}}" formControlName="{{formOptions.PHONE_FIELD_NAME}}" required minlength="11"
+            pattern="{{formOptions.PHONE_PATTERN}}" placeholder="+7(900)123-45-67" (focus)="maskPhoneInput(phone.value)" (input)="maskPhoneInput(phone.value)"
+            maxNumbersSum #phone>
         </div>
         <div class="contact__form-row">
-          <button type="submit" id="submitButton">Отправить</button>
+          <button type="submit" id="{{formOptions.SUBMIT_BUTTON_ID}}">Отправить</button>
         </div>
       </fieldset>
     </form>
-    <div id="resultContainer"></div>
+    <div class="contact__result" id="{{formOptions.RESULT_CONTAINER_ID}}"></div>
   </div>
 </div>
 
+<div class="test-panel">
+  <button (click)="formOptions.setFormAction('success.json')">Set form action success.json</button>
+  <button (click)="formOptions.setFormAction('error.json')">Set form action error.json</button>
+  <button (click)="formOptions.setFormAction('progress.json')">Set form action progress.json</button>
+</div>

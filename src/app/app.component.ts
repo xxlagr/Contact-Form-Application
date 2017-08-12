@@ -1,9 +1,8 @@
 import { Component, Input, ElementRef, ViewChild } from '@angular/core';
-import { FormsModule, FormBuilder } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Contact } from './models/contact';
-import { FormOptions } from './shared/form-options'
-
+import { FormOptions } from './shared/form-options';
 
 @Component({
 
@@ -16,21 +15,18 @@ import { FormOptions } from './shared/form-options'
 
 export class AppComponent {
 
-  public form: any;
-
-  @ViewChild('phone') phone: ElementRef;
+  public form: FormGroup;
 
   constructor(formBuilder: FormBuilder, public formOptions: FormOptions) {
 
+    // Build form object
     this.form = formBuilder.group(new Contact());
 
-    this.form.valueChanges.subscribe(formData => {
-
-      window.MyForm.setData(formData);
-
-    });
-
   }
+
+
+  // Using for input mask
+  @ViewChild('phone') phone: ElementRef;
 
   // Simple mask for phone number
   public maskPhoneInput(phoneValue: string): void {
@@ -41,7 +37,7 @@ export class AppComponent {
 
     if (result != null && result.length > 1) {
 
-      for (var i: number = 1; i <= 10; i++) {
+      for (let i: number = 1; i <= 10; i++) {
 
         if (result[i] == undefined) break;
 
@@ -55,12 +51,11 @@ export class AppComponent {
 
     }
 
-    this.form.value.phone = this.phone.nativeElement.value;
-
   }
 
   public submitForm(): void {
 
+    // Submit form in MyForm obj
     window.MyForm.submit();
 
   }
